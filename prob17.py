@@ -17,14 +17,15 @@ def n_of_chars99(num):
     else:
         q = num / 10
         r = num % 10
-        return len(dat2[q - 2]) + len(dat1[r - 1])
+        return len(dat2[q - 2]) + \
+            (len("") if r == 0 else len(dat1[r - 1]))
 
 def n_of_chars999(num):
     if num < 100: return n_of_chars99(num)
     else :
         num2 = num % 100
         return len(dat1[num / 100 - 1]) + len("hundred") + \
-            (0 if num2 == 0 else (len("and") + n_of_chars99(num2)))
+            (len("") if num2 == 0 else (len("and") + n_of_chars99(num2)))
     
 def n_of_chars(num):
     if num < 1000: return n_of_chars999(num)
