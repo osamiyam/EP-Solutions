@@ -1,11 +1,9 @@
 import re
 
-data = ("""\
+dat1, dat2 = map(lambda(d): re.split('[:\n]', d), """\
 one:two:three:four:five:six:seven:eight:nine:ten:eleven:twelve:thirteen
 fourteen:fifteen:sixteen:seventeen:eighteen:nineteen""",
-        """twenty:thirty:forty:fifty:sixty:seventy:eighty:ninety""")
-
-dat1, dat2 = map(lambda(d): re.split('[:\n]', d), data)
+                 """twenty:thirty:forty:fifty:sixty:seventy:eighty:ninety""")
 # print dat1, dat2
 
 def nchars99(num):
