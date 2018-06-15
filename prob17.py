@@ -1,42 +1,33 @@
 import re
 
-data1 = """\
+dat1, dat2 = map(lambda(d): re.split('[:\n]', d), """\
 one:two:three:four:five:six:seven:eight:nine:ten:eleven:twelve:thirteen
-fourteen:fifteen:sixteen:seventeen:eighteen:nineteen"""
+fourteen:fifteen:sixteen:seventeen:eighteen:nineteen&&
+twenty:thirty:forty:fifty:sixty:seventy:eighty:ninety""".split("&&\n"))
+# print dat1, dat2
 
-data2 = """\
-twenty:thirty:forty:fifty:sixty:seventy:eighty:ninety"""
-
-dat1 =  re.split('[:\n]', data1)
-dat2 =  re.split('[:\n]', data2)
-print dat1
-print dat2
-
-def n_of_chars99(num):
-    if num < 20: return len(dat1[num - 1])
+def nchars99(num):
+    if num < 20: return dat1[num - 1]
     else:
-        q = num / 10
-        r = num % 10
-        return len(dat2[q - 2]) + \
-            (len("") if r == 0 else len(dat1[r - 1]))
+        q, r = num / 10, num % 10
+        return dat2[q - 2] + ("" if r == 0 else dat1[r - 1])
 
-def n_of_chars999(num):
-    if num < 100: return n_of_chars99(num)
+def nchars999(num):
+    if num < 100: return nchars99(num)
     else :
-        num2 = num % 100
-        return len(dat1[num / 100 - 1]) + len("hundred") + \
-            (len("") if num2 == 0 else (len("and") + n_of_chars99(num2)))
+        q, r = num / 100, num % 100
+        return nchars99(q) + "hundred" +\
+            ("" if r == 0 else "and" + nchars99(r))
     
-def n_of_chars(num):
-    if num < 1000: return n_of_chars999(num)
-    else: return len("one" + "thousand")
+def nchars(num):
+    return nchars999(num) if num < 1000 else "one" + "thousand"
 
 def count():
-    k = 1
-    sum = 0
+    k, sum = 1, 0
     while k <= 1000:
-        sum += n_of_chars(k)
+        sum += len(nchars(k))
         k += 1
-    print sum
-    
-count()
+    return sum
+
+if __name__ == '__main__':
+    print count()
